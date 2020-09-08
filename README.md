@@ -1,7 +1,7 @@
 # kbview
 kbview is a small python script to show your keyboard presses in a customizable window. All the config is stored in json format.
 
-![](https://raw.githubusercontent.com/rokie95/kbview/master/docs/config.json.png)
+![config.json](https://raw.githubusercontent.com/rokie95/kbview/master/docs/config.png)
 
 ```
 usage: kbview.py [-h] [--config CONFIG] [-d]
