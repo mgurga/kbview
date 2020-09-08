@@ -8,38 +8,32 @@
 	"labelfontsize":13,
 	"xscroll": 0,
 	"yscroll": -60,
+	"keywidth": 40,
+	"keyheight": 40,
 	"keys": [
 		{
 			"key": "w,i",
 			"label": "W/I",
 			"x": 50,
-			"y": 155,
-			"width": 40,
-			"height": 40
+			"y": 155
 		},
 		{
 			"key": "a,j",
 			"label": "A/J",
 			"x": 5,
-			"y": 110,
-			"width": 40,
-			"height": 40
+			"y": 110
 		},
 		{
 			"key": "s,k",
 			"label": "S/K",
 			"x": 50,
-			"y": 110,
-			"width": 40,
-			"height": 40
+			"y": 110
 		},
 		{
 			"key": "d,l",
 			"label": "D/L",
 			"x": 95,
-			"y": 110,
-			"width": 40,
-			"height": 40
+			"y": 110
 		},
 		{
 			"key": "Key.shift",

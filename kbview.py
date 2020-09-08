@@ -81,6 +81,8 @@ class KeyboardView(arcade.Window):
 			textcolor = ()
 			labeltext = ""
 			labelfs = 0
+			keywidth = 0
+			keyheight = 0
 			
 			# draw key unactive backplate
 			if "keycolor" in keyconfig:
@@ -115,12 +117,24 @@ class KeyboardView(arcade.Window):
 			else:
 				labelfs = config["labelfontsize"]
 
+			# get key width
+			if "width" in keyconfig:
+				keywidth = keyconfig["width"]
+			else:
+				keywidth = config["keywidth"]
+
+			# get key height
+			if "height" in keyconfig:
+				keyheight = keyconfig["height"]
+			else:
+				keyheight = config["keyheight"]
+
 			# draw the key background
 			arcade.draw_rectangle_filled(
-				keyconfig["x"] + (keyconfig["width"] / 2) + config["xscroll"],
-				keyconfig["y"] + (keyconfig["height"] / 2) + config["yscroll"],
-				keyconfig["width"],
-				keyconfig["height"],
+				keyconfig["x"] + (keywidth / 2) + config["xscroll"],
+				keyconfig["y"] + (keyheight / 2) + config["yscroll"],
+				keywidth,
+				keyheight,
 				fillcolor)
 			
 			# draw the key text
@@ -130,7 +144,7 @@ class KeyboardView(arcade.Window):
 				keyconfig["y"] + config["yscroll"],
 				textcolor,
 				labelfs,
-				keyconfig["width"],
+				keywidth,
 				"center"
 			)
 		
