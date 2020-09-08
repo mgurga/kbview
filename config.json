@@ -1,0 +1,61 @@
+{
+	"windowwidth": 140,
+	"windowheight": 140,
+	"backgroundcolor": "#ffffff",
+	"keycolor": "#8d8d8d",
+	"keycoloractive": "#67f567",
+	"labelcolor": "#000000",
+	"labelfontsize":13,
+	"xscroll": 0,
+	"yscroll": -60,
+	"keys": [
+		{
+			"key": "w,i",
+			"label": "W/I",
+			"x": 50,
+			"y": 155,
+			"width": 40,
+			"height": 40
+		},
+		{
+			"key": "a,j",
+			"label": "A/J",
+			"x": 5,
+			"y": 110,
+			"width": 40,
+			"height": 40
+		},
+		{
+			"key": "s,k",
+			"label": "S/K",
+			"x": 50,
+			"y": 110,
+			"width": 40,
+			"height": 40
+		},
+		{
+			"key": "d,l",
+			"label": "D/L",
+			"x": 95,
+			"y": 110,
+			"width": 40,
+			"height": 40
+		},
+		{
+			"key": "Key.shift",
+			"label": "SHIFT",
+			"x": 5,
+			"y": 65,
+			"width": 62,
+			"height": 40
+		},
+		{
+			"key": "Key.space",
+			"label": "SPACE",
+			"x": 73,
+			"y": 65,
+			"width": 62,
+			"height": 40
+		}
+	]
+}
