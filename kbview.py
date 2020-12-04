@@ -174,7 +174,7 @@ class KeyboardView(arcade.Window):
 					textcolor = self.hextorgb(config["labelcolor"])
 				
 				arcade.draw_text(
-					"not in program",
+					"not in '" + config["program"] + "'",
 					0,
 					0,
 					self.hextorgb(config["labelcolor"])
