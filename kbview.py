@@ -83,7 +83,7 @@ class KeyboardView(arcade.Window):
 			else:
 				targetprogram = ""
 
-			print("current program is " + ewmh.getActiveWindow().get_wm_name() + " looking for " + targetprogram)
+			# print("current program is " + ewmh.getActiveWindow().get_wm_name() + " looking for " + targetprogram)
 
 			if targetprogram == ewmh.getActiveWindow().get_wm_name() or targetprogram == "":
 				# loops through every key in list
