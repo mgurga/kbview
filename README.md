@@ -32,6 +32,7 @@ Configs have 2 main parts, the global configs and key specific configs. If you d
  - ```keyheight``` - the height of the key drawing ```(EITHER)```
  - ```xscroll``` - a x value that is added to all keys, defaults to 0 ```(OPTIONAL)```
  - ```yscroll``` - a y value that is added to all keys, defaults to 0 ```(OPTIONAL)```
+ - ```program``` - only display keypresses when this program is open, only works on linux right now ```(OPTIONAL)```
 
 #### Key Configs:
 Key configs are stored in a list and in the list are json objects, the below key configs apply to each json object. If this sounds confusing look at the default config.json [here](https://raw.githubusercontent.com/rokie95/kbview/master/config.json)

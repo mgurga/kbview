@@ -10,6 +10,7 @@
 	"yscroll": -60,
 	"keywidth": 40,
 	"keyheight": 40,
+	"program":"Firefox",
 	"keys": [
 		{
 			"key": "w,i",

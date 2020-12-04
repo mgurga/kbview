@@ -2,6 +2,7 @@
 import argparse
 import arcade
 import json
+from ewmh import EWMH
 from pynput import keyboard
 
 # command line options
@@ -10,6 +11,7 @@ parser.add_argument("--config", type=str, help="config file path. (default='conf
 parser.add_argument("-d", "--debug", help="show debug prints. (default=False)", action='store_true', default=False)
 args = parser.parse_args()
 
+ewmh = EWMH()
 keydict = {} # dict of pressed keys in format, {"$KEY": True}
 config = {} # user config file, not loaded until later
 possiblekeys = [] # keys that have been defined in config
@@ -76,88 +78,112 @@ class KeyboardView(arcade.Window):
 		arcade.start_render()
 
 		try:
-			# loops through every key in list
-			for keyconfig in self.keyconfigs:
-				fillcolor = ()
-				textcolor = ()
-				labeltext = ""
-				labelfs = 0
-				keywidth = 0
-				keyheight = 0
-				xscroll = 0
-				yscroll = 0
-				
-				# draw key unactive backplate
-				if "keycolor" in keyconfig:
-					fillcolor = self.hextorgb(keyconfig["keycolor"])
-				else:
-					fillcolor = self.hextorgb(config["keycolor"])
+			if "program" in config:
+				targetprogram = config["program"]
+			else:
+				targetprogram = ""
 
-				# draw active key backplate if any possible key is pressed
-				posskeys = keyconfig["key"].split(",")
-				for posskey in posskeys:
-					if posskey in keydict and keydict[posskey] == True:
-						if "keycoloractive" in keyconfig:
-							fillcolor = self.hextorgb(keyconfig["keycoloractive"])
-						else:
-							fillcolor = self.hextorgb(config["keycoloractive"])
+			print("current program is " + ewmh.getActiveWindow().get_wm_name() + " looking for " + targetprogram)
 
-				# get label of key
-				if "label" in keyconfig:
-					labeltext = keyconfig["label"]
-				else:
-					labeltext = keyconfig["key"]
+			if targetprogram == ewmh.getActiveWindow().get_wm_name() or targetprogram == "":
+				# loops through every key in list
+				for keyconfig in self.keyconfigs:
+					fillcolor = ()
+					textcolor = ()
+					labeltext = ""
+					labelfs = 0
+					keywidth = 0
+					keyheight = 0
+					xscroll = 0
+					yscroll = 0
+					
+					# draw key unactive backplate
+					if "keycolor" in keyconfig:
+						fillcolor = self.hextorgb(keyconfig["keycolor"])
+					else:
+						fillcolor = self.hextorgb(config["keycolor"])
 
-				# label color of key
-				if "labelcolor" in keyconfig:
-					textcolor = self.hextorgb(keyconfig["labelcolor"])
+					# draw active key backplate if any possible key is pressed
+					posskeys = keyconfig["key"].split(",")
+					for posskey in posskeys:
+						if posskey in keydict and keydict[posskey] == True:
+							if "keycoloractive" in keyconfig:
+								fillcolor = self.hextorgb(keyconfig["keycoloractive"])
+							else:
+								fillcolor = self.hextorgb(config["keycoloractive"])
+
+					# get label of key
+					if "label" in keyconfig:
+						labeltext = keyconfig["label"]
+					else:
+						labeltext = keyconfig["key"]
+
+					# label color of key
+					if "labelcolor" in keyconfig:
+						textcolor = self.hextorgb(keyconfig["labelcolor"])
+					else:
+						textcolor = self.hextorgb(config["labelcolor"])
+
+					# label font size of key
+					if "labelfontsize" in keyconfig:
+						labelfs = keyconfig["labelfontsize"]
+					else:
+						labelfs = config["labelfontsize"]
+
+					# get key width
+					if "width" in keyconfig:
+						keywidth = keyconfig["width"]
+					else:
+						keywidth = config["keywidth"]
+
+					# get key height
+					if "height" in keyconfig:
+						keyheight = keyconfig["height"]
+					else:
+						keyheight = config["keyheight"]
+
+					# get scroll from config if it exists
+					if "xscroll" in config:
+						xscroll = config["xscroll"]
+					if "yscroll" in config:
+						yscroll = config["yscroll"]
+
+					# draw the key background
+					arcade.draw_rectangle_filled(
+						keyconfig["x"] + (keywidth / 2) + xscroll,
+						keyconfig["y"] + (keyheight / 2) + yscroll,
+						keywidth,
+						keyheight,
+						fillcolor)
+					
+					# draw the key text
+					arcade.draw_text(
+						labeltext,
+						keyconfig["x"] + xscroll,
+						keyconfig["y"] + yscroll,
+						textcolor,
+						labelfs,
+						keywidth,
+						"center"
+					)
+			else:
+				# print("not in program: " + ewmh.getActiveWindow().get_wm_name())
+				if "labelcolor" in config:
+					textcolor = self.hextorgb(config["labelcolor"])
 				else:
 					textcolor = self.hextorgb(config["labelcolor"])
-
-				# label font size of key
-				if "labelfontsize" in keyconfig:
-					labelfs = keyconfig["labelfontsize"]
-				else:
-					labelfs = config["labelfontsize"]
-
-				# get key width
-				if "width" in keyconfig:
-					keywidth = keyconfig["width"]
-				else:
-					keywidth = config["keywidth"]
-
-				# get key height
-				if "height" in keyconfig:
-					keyheight = keyconfig["height"]
-				else:
-					keyheight = config["keyheight"]
-
-				# get scroll from config if it exists
-				if "xscroll" in config:
-					xscroll = config["xscroll"]
-				if "yscroll" in config:
-					yscroll = config["yscroll"]
-
-				# draw the key background
-				arcade.draw_rectangle_filled(
-					keyconfig["x"] + (keywidth / 2) + xscroll,
-					keyconfig["y"] + (keyheight / 2) + yscroll,
-					keywidth,
-					keyheight,
-					fillcolor)
 				
-				# draw the key text
 				arcade.draw_text(
-					labeltext,
-					keyconfig["x"] + xscroll,
-					keyconfig["y"] + yscroll,
-					textcolor,
-					labelfs,
-					keywidth,
-					"center"
+					"not in program",
+					0,
+					0,
+					self.hextorgb(config["labelcolor"])
 				)
+
 		except KeyError:
 			print("CONFIG MISSING REQUIRED PARAMETER")
+		except AttributeError:
+			print("window not found")
 		
 		arcade.finish_render()
 
